@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		275748BA18D0A65800E5D561 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275748B718D0A65800E5D561 /* license.txt */; };
+		275748BE18D0D81800E5D561 /* kontakt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 275748BD18D0D81800E5D561 /* kontakt.jpg */; };
 		2798764918CF4404001F33FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2798764818CF4404001F33FD /* Foundation.framework */; };
 		2798764B18CF4404001F33FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2798764A18CF4404001F33FD /* CoreGraphics.framework */; };
 		2798764D18CF4404001F33FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2798764C18CF4404001F33FD /* UIKit.framework */; };
@@ -38,6 +40,10 @@
 
 /* Begin PBXFileReference section */
 		1DD653D283754CABB15A9E1C /* Pods-iBeaconDemo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconDemo.xcconfig"; path = "Pods/Pods-iBeaconDemo.xcconfig"; sourceTree = "<group>"; };
+		275748B518D0A65800E5D561 /* icon_7112.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_7112.png; sourceTree = "<group>"; };
+		275748B618D0A65800E5D561 /* icon_7112.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icon_7112.svg; sourceTree = "<group>"; };
+		275748B718D0A65800E5D561 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		275748BD18D0D81800E5D561 /* kontakt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = kontakt.jpg; sourceTree = "<group>"; };
 		2798764518CF4404001F33FD /* iBeaconDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2798764818CF4404001F33FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2798764A18CF4404001F33FD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -90,6 +96,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		275748B418D0A65800E5D561 /* icon_7112 */ = {
+			isa = PBXGroup;
+			children = (
+				275748B518D0A65800E5D561 /* icon_7112.png */,
+				275748B618D0A65800E5D561 /* icon_7112.svg */,
+				275748B718D0A65800E5D561 /* license.txt */,
+			);
+			path = icon_7112;
+			sourceTree = "<group>";
+		};
 		2798763C18CF4404001F33FD = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +157,8 @@
 		2798764F18CF4404001F33FD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				275748BD18D0D81800E5D561 /* kontakt.jpg */,
+				275748B418D0A65800E5D561 /* icon_7112 */,
 				27AB6BC618CFF5D000C081EC /* icon_28191 */,
 				2798765018CF4404001F33FD /* iBeaconDemo-Info.plist */,
 				2798765118CF4404001F33FD /* InfoPlist.strings */,
@@ -259,6 +277,8 @@
 				27AB6BCC18CFF5D000C081EC /* license.txt in Resources */,
 				2798766118CF4404001F33FD /* Images.xcassets in Resources */,
 				2798765318CF4404001F33FD /* InfoPlist.strings in Resources */,
+				275748BA18D0A65800E5D561 /* license.txt in Resources */,
+				275748BE18D0D81800E5D561 /* kontakt.jpg in Resources */,
 				2798765C18CF4404001F33FD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

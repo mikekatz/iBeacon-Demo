@@ -10,9 +10,18 @@
 #import "KCSBeaconManager.h"
 #import "KCSBeaconInfo.h"
 
+#define kKontaktUUID @"F7826DA6-4FA2-4E98-8024-BC5B71E0893E"
+#define kiPadUUID @"41AF5763-174C-4C2C-9E4A-C99EAB4AE668"
+#define kOSXUUID @"41AF5763-174C-4C2C-9E4A-C99EAB4AE668"
+#define kiPadMajor 1
+#define kOSXMajor 5
+
+
 @interface BeaconListViewController () <KCSBeaconManagerDelegate>
 @property (nonatomic, strong) KCSBeaconManager* beaconManager;
 @property (nonatomic, strong) NSMutableSet* visibleBeacons;
+@property (nonatomic, strong) CLBeacon* nearestBeacon;
+@property (nonatomic, strong) NSMutableDictionary* deves;
 @end
 
 @implementation BeaconListViewController
@@ -32,12 +41,18 @@
     // Do any additional setup after loading the view.
     
     self.visibleBeacons = [NSMutableSet set];
+    self.nearestBeacon = nil;
     
     self.beaconManager = [[KCSBeaconManager alloc] init];
     self.beaconManager.delegate = self;
     self.beaconManager.postsLocalNotification = YES;
     
-    [self.beaconManager startMonitoringForRegion:@"41AF5763-174C-4C2C-9E4A-C99EAB4AE668" identifier:@"osx" major:@(5) minor:@(5000)];
+    [self.beaconManager startMonitoringForRegion:kOSXUUID identifier:@"osx" major:@(kOSXMajor) minor:@(5000)];
+    [self.beaconManager startMonitoringForRegion:kiPadUUID identifier:@"ipad" major:@(kiPadMajor) minor:@(1)];
+    [self.beaconManager startMonitoringForRegion:kKontaktUUID identifier:@"kontakt"];
+    //    [self.beaconManager startMonitoringForRegion:[[NSUUID UUID] UUIDString] identifier:@"foo"];
+    
+    self.deves = [NSMutableDictionary dictionary];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +64,9 @@
 #pragma mark - Beacons
 - (void)newNearestBeacon:(CLBeacon *)beacon
 {
-    NSLog(@"%@", beacon);
+    NSLog(@"new nearest beacon%@", beacon);
+    self.nearestBeacon = beacon;
+    [self.collectionView reloadData];
 }
 
 - (void)rangingFailedForRegion:(CLBeaconRegion *)region withError:(NSError *)error
@@ -60,11 +77,11 @@
 - (void) enteredRegion:(CLBeaconRegion *)region
 {
     NSLog(@"entered region: %@", region);
-    KCSBeaconInfo* info = [region kcsBeaconInfo];
-    if (info) {
-        [self.visibleBeacons addObject:info];
-        [self.collectionView reloadData];
-    }
+//    KCSBeaconInfo* info = [region kcsBeaconInfo];
+//    if (info) {
+//        [self.visibleBeacons addObject:info];
+//        [self.collectionView reloadData];
+//    }
 }
 
 - (void)exitedRegion:(CLBeaconRegion *)region
@@ -89,6 +106,29 @@
             [self.visibleBeacons addObject:info];
         }
         [self.visibleBeacons addObject:info];
+        
+        NSMutableDictionary* dev = self.deves[info];
+        if (!dev) {
+            dev = [NSMutableDictionary dictionary];
+            self.deves[info] = dev;
+        }
+        
+        double last = [dev[@"last"] doubleValue];
+        double newDiff = 0;
+        if (last) {
+            newDiff = ABS(last - info.accuracy);
+            NSMutableArray* vals = dev[@"vals"];
+            if (!vals) {
+                vals = [NSMutableArray array];
+                dev[@"vals"] = vals;
+            }
+            [vals addObject:@(newDiff)];
+            int count = [dev[@"count"] intValue];
+            dev[@"count"] = @(++count);
+        }
+        dev[@"last"] = @(info.accuracy);
+        
+        
         [self.collectionView reloadData];
     }
 }
@@ -115,8 +155,12 @@
     
     UIImageView* iv = (UIImageView*)[cell viewWithTag:2];
     UIImage* im = nil;
-    if ([beaconInfo.identifier isEqualToString:@"osx"]) {
+    if ([beaconInfo.uuid isEqualToString:kOSXUUID] && beaconInfo.major == kOSXMajor) {
         im = [UIImage imageNamed:@"macicon"];
+    } else if ([beaconInfo.uuid isEqualToString:kiPadUUID] && beaconInfo.major == kiPadMajor) {
+        im = [UIImage imageNamed:@"ipadicon"];
+    } else if ([beaconInfo.uuid isEqualToString:kKontaktUUID]) {
+        im = [UIImage imageNamed:@"kontakt.jpg"];
     }
     iv.image = im;
     
@@ -149,6 +193,21 @@
         default:
             break;
     }
+    
+    UILabel* nearest = (UILabel*)[cell viewWithTag:7];
+    nearest.hidden = ![[self.nearestBeacon kcsBeaconInfo] isEqual:beaconInfo];
+    
+    NSDictionary* diffs = self.deves[beaconInfo];
+    double avg = NAN;
+    if (diffs) {
+        NSArray* vals = diffs[@"vals"];
+        double total = [[vals valueForKeyPath:@"@sum.self"] doubleValue];
+        avg = total / [diffs[@"count"] doubleValue];
+    }
+    UILabel* avL = (UILabel*)[cell viewWithTag:8];
+    avL.text = [NSString stringWithFormat:@"Avg dev: %4.2f", avg];
+
+    
     return cell;
 }
 

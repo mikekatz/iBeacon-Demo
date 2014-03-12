@@ -1,0 +1,14 @@
+PODS:
+  - KCSIBeacon (0.0.1)
+
+DEPENDENCIES:
+  - KCSIBeacon (from `/Users/mike/work/Sample Apps/KCSIBeacon`)
+
+EXTERNAL SOURCES:
+  KCSIBeacon:
+    :path: /Users/mike/work/Sample Apps/KCSIBeacon
+
+SPEC CHECKSUMS:
+  KCSIBeacon: 347384123e48d36b6628bb68bb88646a657b5e6e
+
+COCOAPODS: 0.29.0

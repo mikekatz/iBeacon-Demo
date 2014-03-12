@@ -1,0 +1,11 @@
+platform :ios, "7.0"
+
+target "iBeaconDemo" do
+pod 'KCSIBeacon', :path =>'/Users/mike/work/Sample Apps/KCSIBeacon'
+#:git => 'https://github.com/KinveyLabs/KCSIBeacon.git'
+end
+
+target "iBeaconDemoTests" do
+
+end
+

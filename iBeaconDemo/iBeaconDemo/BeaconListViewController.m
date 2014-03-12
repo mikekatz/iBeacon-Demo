@@ -37,7 +37,7 @@
     self.beaconManager.delegate = self;
     self.beaconManager.postsLocalNotification = YES;
     
-    [self.beaconManager startMonitoringForRegion:@"41AF5763-174C-4C2C-9E4A-C99EAB4AE668" identifier:@"osx"];
+    [self.beaconManager startMonitoringForRegion:@"41AF5763-174C-4C2C-9E4A-C99EAB4AE668" identifier:@"osx" major:@(5) minor:@(5000)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +77,21 @@
     }
     
 }
+//TODO: handle enter larger region and range minor value
+- (void)rangedBeacon:(CLBeacon *)beacon
+{
+    NSLog(@"ranged beacon: %@", beacon);
+    KCSBeaconInfo* info = [beacon kcsBeaconInfo];
+    if (info) {
+        if ([self.visibleBeacons containsObject:info]) {
+            [[self.visibleBeacons member:info] mergeWithNewInfo:info];
+        } else {
+            [self.visibleBeacons addObject:info];
+        }
+        [self.visibleBeacons addObject:info];
+        [self.collectionView reloadData];
+    }
+}
 
 #pragma mark - Collection View
 
@@ -104,6 +119,36 @@
         im = [UIImage imageNamed:@"macicon"];
     }
     iv.image = im;
+    
+    UILabel* major = (UILabel*)[cell viewWithTag:3];
+    major.text = [NSString stringWithFormat:@"Major: %u", beaconInfo.major];
+    UILabel* minor = (UILabel*)[cell viewWithTag:4];
+    minor.text = [NSString stringWithFormat:@"Minor: %u", beaconInfo.minor];
+    
+    UILabel* acc = (UILabel*)[cell viewWithTag:5];
+    acc.text = [NSString stringWithFormat:@"± %4.2fm", beaconInfo.accuracy];
+    
+    UILabel* prox = (UILabel*)[cell viewWithTag:6];
+    switch (beaconInfo.proximity) {
+        case CLProximityUnknown:
+            prox.text = @"Unknown";
+            prox.backgroundColor = [UIColor magentaColor];
+            break;
+        case CLProximityImmediate:
+            prox.text = @"Immediate";
+            prox.backgroundColor = [UIColor greenColor];
+            break;
+        case CLProximityNear:
+            prox.text = @"Near";
+            prox.backgroundColor = [UIColor yellowColor];
+            break;
+        case CLProximityFar:
+            prox.text = @"Far";
+            prox.backgroundColor = [UIColor redColor];
+            break;
+        default:
+            break;
+    }
     return cell;
 }
 

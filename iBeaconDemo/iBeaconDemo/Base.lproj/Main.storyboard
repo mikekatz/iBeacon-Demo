@@ -26,19 +26,30 @@
                                     <rect key="frame" x="0.0" y="0.0" width="213" height="1007"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2Vq-Pk-LIh">
-                                            <rect key="frame" x="85" y="327" width="42" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="189" translatesAutoresizingMaskIntoConstraints="NO" id="2Vq-Pk-LIh">
+                                            <rect key="frame" x="12" y="493" width="189" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YzG-uf-CWh">
+                                            <rect key="frame" x="53" y="350" width="107" height="115"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="107" id="giK-H4-uTF"/>
+                                                <constraint firstAttribute="height" constant="115" id="zrN-Us-M7I"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="2Vq-Pk-LIh" secondAttribute="centerX" constant="0.5" id="ZyW-cx-aVA"/>
-                                    <constraint firstAttribute="centerY" secondItem="2Vq-Pk-LIh" secondAttribute="centerY" constant="166" id="sVC-1S-TVP"/>
+                                    <constraint firstItem="2Vq-Pk-LIh" firstAttribute="centerX" secondItem="YzG-uf-CWh" secondAttribute="centerX" constant="-0.5" id="If1-Z7-2XX"/>
+                                    <constraint firstItem="2Vq-Pk-LIh" firstAttribute="leading" secondItem="gL6-lz-0x6" secondAttribute="leading" constant="12" id="UIE-Mr-BSb"/>
+                                    <constraint firstAttribute="centerY" secondItem="2Vq-Pk-LIh" secondAttribute="centerY" id="bwp-tj-FIS"/>
+                                    <constraint firstItem="2Vq-Pk-LIh" firstAttribute="top" secondItem="YzG-uf-CWh" secondAttribute="bottom" constant="28" id="r3Y-Q2-pfV"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Vq-Pk-LIh" secondAttribute="trailing" constant="12" id="vxJ-gR-oeU"/>
                                 </constraints>
                             </collectionViewCell>
                         </cells>

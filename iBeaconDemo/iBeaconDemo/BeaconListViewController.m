@@ -97,7 +97,13 @@
     UILabel* l = (UILabel*)[cell viewWithTag:1];
     KCSBeaconInfo* beaconInfo = [self.visibleBeacons allObjects][indexPath.row];
     l.text = beaconInfo.uuid;
-    cell.backgroundColor = [UIColor redColor];
+    
+    UIImageView* iv = (UIImageView*)[cell viewWithTag:2];
+    UIImage* im = nil;
+    if ([beaconInfo.identifier isEqualToString:@"osx"]) {
+        im = [UIImage imageNamed:@"macicon"];
+    }
+    iv.image = im;
     return cell;
 }
 

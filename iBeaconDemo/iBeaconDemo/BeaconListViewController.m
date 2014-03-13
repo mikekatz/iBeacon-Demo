@@ -7,8 +7,9 @@
 //
 
 #import "BeaconListViewController.h"
-#import "KCSBeaconManager.h"
-#import "KCSBeaconInfo.h"
+#import "KCSIBeacon.h"
+#import "NearbyBeaconViewController.h"
+
 
 #define kKontaktUUID @"F7826DA6-4FA2-4E98-8024-BC5B71E0893E"
 #define kiPadUUID @"41AF5763-174C-4C2C-9E4A-C99EAB4AE668"
@@ -50,7 +51,6 @@
     [self.beaconManager startMonitoringForRegion:kOSXUUID identifier:@"osx" major:@(kOSXMajor) minor:@(5000)];
     [self.beaconManager startMonitoringForRegion:kiPadUUID identifier:@"ipad" major:@(kiPadMajor) minor:@(1)];
     [self.beaconManager startMonitoringForRegion:kKontaktUUID identifier:@"kontakt"];
-    //    [self.beaconManager startMonitoringForRegion:[[NSUUID UUID] UUIDString] identifier:@"foo"];
     
     self.deves = [NSMutableDictionary dictionary];
 }
@@ -67,6 +67,11 @@
     NSLog(@"new nearest beacon%@", beacon);
     self.nearestBeacon = beacon;
     [self.collectionView reloadData];
+    
+    if ([beacon.major intValue] == kiPadMajor) {
+        NearbyBeaconViewController* nearby = [[NearbyBeaconViewController alloc] initWithNibName:@"NearbyBeaconViewController" bundle:nil];
+        [self presentViewController:nearby animated:YES completion:nil];
+    }
 }
 
 - (void)rangingFailedForRegion:(CLBeaconRegion *)region withError:(NSError *)error
@@ -91,6 +96,10 @@
     if (info) {
         [self.visibleBeacons removeObject:info];
         [self.collectionView reloadData];
+        
+        if ([info isEqual:[self.nearestBeacon kcsBeaconInfo]]) {
+            [self dismissViewControllerAnimated:YES completion:NO];
+        }
     }
     
 }
